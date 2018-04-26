@@ -1,0 +1,1 @@
+My partner is Austin Halverson. We would like to implement R = A + 2B as our custom operation! 

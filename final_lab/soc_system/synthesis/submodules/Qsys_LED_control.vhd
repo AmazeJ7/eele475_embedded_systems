@@ -1,0 +1,64 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity Qsys_LED_control is
+	port (
+		clk 				: in std_logic;
+		reset_n 			: in std_logic; 
+		avs_s1_address 		: in std_logic_vector(2 downto 0);
+		avs_s1_write	    : in std_logic;
+		avs_s1_writedata 	: in std_logic_vector(31 downto 0);
+		avs_s1_read 		: in std_logic;
+		avs_s1_readdata 	: out std_logic_vector(31 downto 0);
+		LEDs			    : out std_logic_vector(7 downto 0)
+	);
+end Qsys_LED_control;
+
+architecture Qsys_LED_control_arch of Qsys_LED_control is
+
+	signal regA, regB, regO, regR, regS : std_logic_vector(31 downto 0); -- A, B, Opcode, Result, Status bits
+	
+	component alu is
+    		port(	Opcode 		: in std_logic_vector(2 downto 0); 
+         		A    		: in std_logic_vector(31 downto 0); 
+					B       	: in std_logic_vector(31 downto 0); 
+					ALU_Result 	: out std_logic_vector(31 downto 0); 
+         		Status     	: out std_logic_vector(3 downto 0)); 
+         
+	end component;
+	
+	begin
+
+		LEDs(7 downto 5) <= regO(2 downto 0); -- Opcode
+		LEDs(3 downto 0) <= regS(3 downto 0); -- Status bits
+
+		A1 : alu port map(Opcode 	=> regO(2 downto 0),
+				A    			=> regA(31 downto 0),
+				B       		=> regB(31 downto 0),
+				ALU_Result  => regR(31 downto 0),
+				Status     	=> regS(3  downto 0));
+	                        
+		process(clk) is
+			begin
+				if (rising_edge(clk)) and (avs_s1_read = '1') then
+					case avs_s1_address is
+						when "000" => avs_s1_readdata <= regA;
+						when "001" => avs_s1_readdata <= regB;
+						when "010" => avs_s1_readdata <= regO;
+						when "011" => avs_s1_readdata <= regR;
+						when "100" => avs_s1_readdata <= regS;
+						when others => avs_s1_readdata <= (others => '0');
+					end case;
+				elsif(rising_edge(clk)) and (avs_s1_write = '1') then
+					case avs_s1_address is
+						when "000" => regA <= avs_s1_writedata;
+						when "001" => regB <= avs_s1_writedata;
+						when "010" => regO <= avs_s1_writedata;
+						when others => avs_s1_readdata <= (others => '0');
+					end case;
+				end if;
+		end process; 
+		
+end Qsys_LED_control_arch;

@@ -1,0 +1,58 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity LED_Control is
+  port (clk, reset, PB : in  std_logic;
+        SW             : in  std_logic_vector(3 downto 0);
+	LED_reg        : in  std_logic_vector(3 downto 0);
+        LED            : out std_logic_vector(7 downto 0));
+end entity;
+
+architecture LED_Control_arch of LED_Control is
+
+  type State_Type is (S0, S1);
+  signal current_state, next_state : State_Type;
+  signal PB_int : std_logic;
+  
+  component PB_transform 
+	port (PB, clk, reset : in  std_logic;
+	      delay          : in  std_logic_vector(24 downto 0);
+	      PB_out         : out std_logic);
+  end component;
+  
+  begin
+  
+    U1 : PB_transform port map (delay => "0001001100010010110100000", clk => clk, PB => PB, reset => reset, PB_out => PB_int);
+	
+    STATE_MEMORY : process (clk, reset)
+      begin
+        if (reset = '0') then 
+	  current_state <= S0;
+	elsif (rising_edge(clk)) then
+	  current_state <= next_state;
+	end if;
+    end process;
+
+    NEXT_STATE_LOGIC : process (PB_int, current_state)
+      begin
+	if (PB_int = '1') then 
+	  if (current_state = S0) then
+	    next_state <= S1;
+	  else 
+	    next_state <= S0;
+	  end if;
+	else
+	  next_state <= current_state;
+	end if;
+    end process;
+
+    OUTPUT_LOGIC : process (SW, current_state)
+      begin
+	case (current_state) is
+	  when S0     => LED(3 downto 0) <= SW; LED(6) <= '0'; LED(7) <= '1';
+	  when S1     => LED(3 downto 0) <= LED_reg; LED(6) <= '1'; LED(7) <= '0';
+	  when others => LED <= "00000000";
+	end case;
+    end process;
+
+end architecture;

@@ -1,0 +1,23 @@
+{C:/EELE475/JG/Final Lab/ALU.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:\EELE475\JG\Final Lab\ALU.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity ALU
+-- Compiling architecture ALU_arch of ALU
+
+} {} {}} {C:/EELE475/JG/Final Lab/Qsys_LED_control.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/EELE475/JG/Final Lab/Qsys_LED_control.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity Qsys_LED_control
+-- Compiling architecture Qsys_LED_control_arch of Qsys_LED_control
+
+} {} {}}

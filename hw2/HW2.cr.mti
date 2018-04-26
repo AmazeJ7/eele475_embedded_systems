@@ -1,0 +1,21 @@
+C:/EELE475/JG/lab4/DE10_NANO_SoC_GHRD/PB_transform.vhd {0 {vcom -work work -2002 -explicit -stats=none {C:\EELE475\JG\lab4\DE10_NANO_SoC_GHRD\PB_transform.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity PB_transform
+-- Compiling architecture PB_transform_arch of PB_transform
+** Error: C:\EELE475\JG\lab4\DE10_NANO_SoC_GHRD\PB_transform.vhd(24): Nonresolved signal 'current_state' has multiple sources.
+  Drivers:
+    C:\EELE475\JG\lab4\DE10_NANO_SoC_GHRD\PB_transform.vhd(106):Process state_update
+       Driven at:
+          C:\EELE475\JG\lab4\DE10_NANO_SoC_GHRD\PB_transform.vhd(109)
+    C:\EELE475\JG\lab4\DE10_NANO_SoC_GHRD\PB_transform.vhd(82):Process output
+       Driven at:
+          C:\EELE475\JG\lab4\DE10_NANO_SoC_GHRD\PB_transform.vhd(102)
+** Error: C:\EELE475\JG\lab4\DE10_NANO_SoC_GHRD\PB_transform.vhd(115): VHDL Compiler exiting
+
+} {11.0 12.0 19.0 20.0} {}}
